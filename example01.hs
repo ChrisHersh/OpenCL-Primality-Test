@@ -36,8 +36,8 @@ import Foreign.Marshal.Array( newArray, peekArray )
 import System.IO
 import Data.Int
 
-upper = 55100
-lower = 55000
+upper = 62000
+lower = 0
 
 main :: IO ()
 main = do
@@ -57,8 +57,8 @@ main = do
   kernel <- clCreateKernel program "duparray"
   
   -- Initialize parameters
-  let original = [lower .. upper] :: [Int32]
-      elemSize = sizeOf (0 :: Int32)
+  let original = [lower .. upper] :: [Int64]
+      elemSize = sizeOf (0 :: Int64)
       vecSize = elemSize * length original
   -- putStrLn $ "Original array = " ++ show original
   input  <- newArray original

@@ -1,9 +1,7 @@
-
-
-int power(int a, int n, int mod)
+long power(long a, long n, long mod)
 {
-	int power = a;
-	int result = 1;
+	long power = a;
+	long result = 1;
 
 	while (n)
 	{
@@ -15,10 +13,10 @@ int power(int a, int n, int mod)
 	return result;
 }
 
-bool witness(int n, int s, int d, int a)
+int witness(long n, long s, long d, long a)
 {
-	int x = power(a, d, n);
-	int y;
+	long x = power(a, d, n);
+	long y;
 
 	while (s) {
 		y = (x * x) % n;
@@ -32,15 +30,15 @@ bool witness(int n, int s, int d, int a)
 	return 1;
 }
 
-int is_prime_mr(int n)
+int is_prime_mr(long n)
 {
 	if (((!(n & 1)) && n != 2) || (n < 2) || (n % 3 == 0 && n != 3))
 		return 0;
 	if (n <= 3)
 		return 1;
 
-	int d = n / 2;
-	int s = 1;
+	long d = n / 2;
+	long s = 1;
 	while (!(d & 1)) {
 		d /= 2;
 		++s;
@@ -61,7 +59,7 @@ int is_prime_mr(int n)
 	return witness(n, s, d, 2) && witness(n, s, d, 3) && witness(n, s, d, 5) && witness(n, s, d, 7) && witness(n, s, d, 11) && witness(n, s, d, 13) && witness(n, s, d, 17);
 }
 
-__kernel void duparray(__global int *in, __global int *out )
+__kernel void duparray(__global long *in, __global long *out )
 {
 	int id = get_global_id(0);
 
@@ -76,6 +74,6 @@ __kernel void duparray(__global int *in, __global int *out )
 
 	//printf("%d :: %d :: %d\t\t",id, in[id], is_prime_mr(in[id]));
 	out[id] = (is_prime_mr(in[id]) == 0) ? 0 : in[id];
-	printf("%d :: %d :: %d\t\t",id, in[id], is_prime_mr(in[id]));
+	//printf("%d :: %d :: %d\t\t",id, in[id], is_prime_mr(in[id]));
 	//out[id] = in[id];
 }
